@@ -29,7 +29,7 @@ public class MyRealM extends AuthorizingRealm {
 			e.printStackTrace();
 		}
 		if (user != null) {
-			return new SimpleAuthenticationInfo(user.getId(), user.getPass(), getName());
+			return new SimpleAuthenticationInfo(user, user.getPass(), getName());
 		} else {
 			return null;
 		}
@@ -45,9 +45,9 @@ public class MyRealM extends AuthorizingRealm {
 		}
 		if (user != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			for (Role role : user.getRoles()) {
+			for (Role role : user.getRoleList()) {
 				info.addRole(role.getName());
-				info.addStringPermissions(role.getPermissions());
+				info.addStringPermissions(role.getPermissionKeys());
 			}
 			return info;
 		} else {

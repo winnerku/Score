@@ -3,19 +3,24 @@ package com.sanzhong.score.pojo;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.jdbc.core.RowMapper;
+
 @SuppressWarnings("serial")
 public class User extends BaseBean implements Serializable {
 
-	private Long id;
+	private Integer id;
 	private String name;
 	private String pass;
 	private String account;
 	private String reg_time;
 	private Integer is_valid;
-	public Long getId() {
+	private Integer is_sys;
+	private List<Role> roleList;
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -48,8 +53,20 @@ public class User extends BaseBean implements Serializable {
 	public void setIs_valid(Integer is_valid) {
 		this.is_valid = is_valid;
 	}
-	public List<Role> getRoles() {
-		return null;
+	public Integer getIs_sys() {
+		return is_sys;
 	}
-	
+	public void setIs_sys(Integer is_sys) {
+		this.is_sys = is_sys;
+	}
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+	@SuppressWarnings("rawtypes")
+	public static RowMapper getRowMapper() throws Exception{
+		return mapRow(User.class);
+	}
 }

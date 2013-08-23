@@ -1,23 +1,37 @@
 package com.sanzhong.score.action;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sanzhong.score.pojo.User;
+import com.sanzhong.score.service.UserService;
 
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-	@RequestMapping(value = "/login")
-	public String test(HttpServletRequest request, HttpServletResponse response) {
+	@Autowired
+	private UserService userService;
+	
+	@RequestMapping(value = "/add")
+	public String test(@RequestParam("username")String account,@RequestParam("password")String password) {
 		Subject subject = SecurityUtils.getSubject();
-		subject.login(new UsernamePasswordToken(request.getParameter("username"), request.getParameter("password")));
+		subject.login(new UsernamePasswordToken(account,password));
 		return "index";
+	}
+	
+	@RequestMapping(value="/userlist",method=RequestMethod.POST)
+	public @ResponseBody List<User> getUserList(){
+		return null;
 	}
 }
